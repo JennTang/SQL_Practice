@@ -89,3 +89,39 @@ from Employees
 order by BirthDate Asc 
 
 
+/*Question 11: Using same output of question 10, but instead of showing BirthDate as a timestamp show BirtDate as a Date Field only */
+
+select 
+	FirstName,
+	LastName,
+	TItle,
+	cast(BirthDate as date) as BirthDate
+from Employees 
+order by BirthDate Asc
+
+/*Question 12: Show FirstName and LastName from the Employees table and create a new Column called FullName showing FirstName and LastName joinined together in one column with a space in-between */
+
+select 
+	FirstName,
+	LastName,
+	(FirstName + ' ' + LastName) as FullName
+from Employees 
+
+/*Question 13: In the OrdersDetails table we have the fields UnitePrice and Quantity. Create a new field called TotalPrice that multiplies the 2 fields together. Show OrderId, ProductID, UnitPrice and Quantity and order by OrderID and Product ID */
+
+select
+	OrderID,
+	ProductID,
+	UnitPrice,
+	Quantity,
+	(UnitPrice * Quantity) as TotalPrice
+from OrderDetails
+order by OrderID, ProductID
+
+/*Question 14: How many Customers are in the Customers Table? Show only one value and dont rely on getting the record count from the result sheet. */
+
+select
+	count(CustomerID) as TotalCustomers
+from Customers 
+
+/*Question 15: Show the date of the first oder ever made in the Orders Table */
