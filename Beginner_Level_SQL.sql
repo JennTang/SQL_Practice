@@ -125,3 +125,49 @@ select
 from Customers 
 
 /*Question 15: Show the date of the first oder ever made in the Orders Table */
+select 
+	min(OrderDate) as FirstOrder
+from Orders
+
+/*Question 16: Show a list of countries where Northwind Company has customers. */
+
+select distinct
+	Country 
+from Customers 
+
+	/*alternative way*/
+	select 
+		Country
+	from Customers 
+	group by Country
+
+/*Question 17: List of all the different values in the Customers table for ContactTitles. Include a count for each CountactTItle. */
+
+select 
+	ContactTitle,
+	Count(ContactTitle) as Count_Contact_Titles
+from Customers
+group by ContactTitle
+order by Count_Contact_Titles desc
+
+/*Question 18: Show for each product the associated Supplier. Show ProductID, ProductName, and the CompanyName of the Supplier. Sort by ProductID. Join Suppliers table to Products table by SupplierID. */
+
+select 
+	p.ProductID,
+	p.ProductName,
+	s.CompanyName as Supplier
+from Products p 
+left join Suppliers s
+on p.SupplierID = s.SupplierID
+order by ProductID
+
+/*Question 19: Show a list of Orders made. Including the Shipper that was used. Show OrderID, OrderDate (date only), and CompanyName of Shipper. Srt by OrderID. Show only the rows where OrderID is less than 10270*/
+
+select 
+	o.OrderID,
+	cast(o.OrderDate as date) as OrderDate,
+	s.CompanyName as Shipper 
+from Orders o
+left join Shippers s
+on o.ShipVia = s.ShipperID
+where OrderID < 10270
