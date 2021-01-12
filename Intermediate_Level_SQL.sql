@@ -70,4 +70,74 @@ from Orders
 group by ShipCountry
 order by AvgFreight desc
 
-/*Question 26: 
+/* Question 26: SImilar to question 2015 using the same data, but instead only take the orders from 2015 */
+
+select top 3
+	ShipCountry,
+	avg(Freight) as AvgFreight
+from Orders
+where year(cast(OrderDate as date)) = '2015'
+group by ShipCountry
+Order by AvgFreight desc
+
+/* Question 27: What is the OrderID of the Order that in the incorrect answer above is missing - Use given 'incorrect' query */
+
+select 
+	orderID
+from Orders
+where OrderDate between '20151231' and '20160101'
+
+/* Question 28: Get the three ship countires with the higest average freight charges. Instead of filtering on a specific year we want to use the last 12 months of order data, using as the end date the last OrderDate in ORders */
+
+Select 
+	max(OrderDate) as MaxDate,
+	dateadd(yy, -1, max(orderDate)) as MinDate
+from orders 
+
+select top 3
+	ShipCountry,
+	avg(Freight) as AvgFreight
+from Orders
+where OrderDate >= (select dateadd(yy, -1, (select max(orderDate) from Orders)))
+group by ShipCountry 
+order by AvgFreight desc
+
+/*Question 29: Show Employee and Order Detail information for all orders. Sort by OrderID and ProductID */
+
+select * from Employees;
+Select * from OrderDetails;
+select * from Products;
+select * from ORders;
+
+select 
+	e.EmployeeID,
+	e.LastName,
+	d.OrderID,
+	p.ProductName,
+	d.Quantity
+from Employees e
+
+join Orders o 
+on e.EmployeeID = o.EmployeeID
+
+join OrderDetails d 
+on o.OrderID = d.OrderID
+
+join Products p
+on d.ProductID = p.ProductID;
+
+/*Question 30: Show customers who never actually placed an order */
+
+select * from Customers
+select * from Orders;
+
+select 
+	c.CustomerID as CustomerID,
+	o.CustomerID as Order_CustomerID
+from Customers c
+
+left join Orders o
+on c.CustomerID = o.CustomerID
+where O.CustomerID is null
+
+/* Question 31: Show only the customers who have never placed an order with Margaret Peacock, EmployeeID 4 */
